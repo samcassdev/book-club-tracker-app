@@ -1,7 +1,11 @@
 document.querySelector('#myForm').addEventListener('submit', getBook)
 
 let apikey = 'AIzaSyBNjOsxD5HWtZEHBpQtedb8esi21ZsFgpM';
-let resultSection = document.querySelector('#result')
+let name = document.getElementById('title')
+let writer = document.getElementById('authors')
+let picture = document.getElementById('thumbnail')
+let link = document.getElementById('previewLink')
+let myImage = new Image(100, 200)
 
 function getBook(ev) {
   ev.preventDefault()
@@ -10,11 +14,25 @@ function getBook(ev) {
     .then(res => res.json()) // parse response as JSON (can be res.text() for plain response)
     .then(response => {
       response.items.forEach(book => {
-        resultSection.innerHTML = `<p>${book.volumeInfo.title}</p>`
-        console.log(book.volumeInfo.authors)
-        console.log(book.volumeInfo.imageLinks.thumbnail)
-        console.log(book.volumeInfo.title)
-        console.log(book.volumeInfo.previewLink)
+        let title = `${book.volumeInfo.title}`
+        let authors = `${book.volumeInfo.authors}`
+        let thumbnail = `${book.volumeInfo.imageLinks.thumbnail}`
+        let previewLink = `${book.volumeInfo.previewLink}`
+
+        // console.log("books length: ", typeof book, book.volumeInfo, Object.keys(book.volumeInfo).length, thumbnail);
+
+        // for(let i = 0; i < 6 /*Object.keys(book.volumeInfo).length*/; i++){
+
+        console.log("pic: ", picture, thumbnail);
+
+          name.innerHTML = title
+          writer.innerHTML =  authors
+          myImage.src = thumbnail;
+          picture.appendChild(myImage);
+          link.setAttribute("href", previewLink + "") 
+
+
+
       })
     })
     .catch(err => {

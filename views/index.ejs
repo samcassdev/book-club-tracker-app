@@ -4,21 +4,31 @@
     <title>Book Club Tracking App</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-<section id="search" class="">
+  <body>
+  <h1>Find a new book to read for your next book club meeting!</h1>
+  <section id="search" class="">
 
-  <form id="myForm">
-    <section class="input-field">
-      <input type="search" id="books">
-      <label for="search">Search Books</label>
-    </section>
-    <button class="btn red" type="submit" name="button">Search Books</button>
-  </form>
+    <form id="myForm">
+      <section class="input-field">
+        <label for="search">Search for books here!</label>
+        <input type="search" id="books">
+      </section>
+      <button class="btn red" type="submit" name="button">Search Books</button>
+    </form>
 
-</section>
-<section id="result"></section>
+  </section>
+  <section>
+    <p id="title"></p>
+    <p id ="authors"></p>
+    <!-- <img id="thumbnail" src="#" alt=""> -->
+    <p id="thumbnail"></p>
+    <a href="" id="previewLink">Click here to check out the book!</a>
+  </section>
 
-<script src="books.js"></script>
+  <a href="/login"><button type="button" name="button">Login</button></a>
+  <a href="/signup"><button type="button" name="button">SIGNUP</button></a>
 
-</body>
+
+  <script src="books.js"></script>
+  </body>
 </html>
