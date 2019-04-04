@@ -8,15 +8,15 @@ module.exports = function(app, passport, db) {
     });
 
     // // PROFILE SECTION =========================
-    // app.get('/pro', isLoggedIn, function(req, res) {
-    //     db.collection('messages').find().toArray((err, result) => {
-    //       if (err) return console.log(err)
-    //       res.render('index.ejs', {
-    //         user : req.user,
-    //         messages: result
-    //       })
-    //     })
-    // });
+    app.get('/books', isLoggedIn, function(req, res) {
+        db.collection('books').find().toArray((err, result) => {
+          if (err) return console.log(err)
+          res.render('books.ejs', {
+            user : req.user,
+            books: result
+          })
+        })
+    });
 
     // LOGOUT ==============================
     app.get('/logout', function(req, res) {
@@ -26,16 +26,16 @@ module.exports = function(app, passport, db) {
 
 // message board routes ===============================================================
 
-    app.post('/messages', (req, res) => {
-      db.collection('messages').save({name: req.body.name, msg: req.body.msg, thumbUp: 0, thumbDown:0}, (err, result) => {
+    app.post('/books', (req, res) => {
+      db.collection('books').save({name: req.body.name, msg: req.body.msg, thumbUp: 0, thumbDown:0}, (err, result) => {
         if (err) return console.log(err)
         console.log('saved to database')
-        res.redirect('/profile')
+        res.redirect('/books')
       })
     })
 
     app.put('/messages', (req, res) => {
-      db.collection('messages')
+      db.collection('books')
       .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
         $set: {
           thumbUp:req.body.thumbUp + 1
@@ -50,7 +50,7 @@ module.exports = function(app, passport, db) {
     })
 
     app.delete('/messages', (req, res) => {
-      db.collection('messages').findOneAndDelete({name: req.body.name, msg: req.body.msg}, (err, result) => {
+      db.collection('books').findOneAndDelete({name: req.body.name, msg: req.body.msg}, (err, result) => {
         if (err) return res.send(500, err)
         res.send('Message deleted!')
       })
@@ -69,7 +69,7 @@ module.exports = function(app, passport, db) {
 
         // process the login form
         app.post('/login', passport.authenticate('local-login', {
-            successRedirect : '/profile', // redirect to the secure profile section
+            successRedirect : '/books', // redirect to the secure profile section
             failureRedirect : '/login', // redirect back to the signup page if there is an error
             failureFlash : true // allow flash messages
         }));
@@ -82,7 +82,7 @@ module.exports = function(app, passport, db) {
 
         // process the signup form
         app.post('/signup', passport.authenticate('local-signup', {
-            successRedirect : '/profile', // redirect to the secure profile section
+            successRedirect : '/books', // redirect to the secure profile section
             failureRedirect : '/signup', // redirect back to the signup page if there is an error
             failureFlash : true // allow flash messages
         }));
@@ -100,7 +100,7 @@ module.exports = function(app, passport, db) {
         user.local.email    = undefined;
         user.local.password = undefined;
         user.save(function(err) {
-            res.redirect('/profile');
+            res.redirect('/books');
         });
     });
 

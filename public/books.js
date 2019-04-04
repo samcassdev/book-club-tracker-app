@@ -5,6 +5,7 @@ let name = document.getElementById('title')
 let writer = document.getElementById('authors')
 let picture = document.getElementById('thumbnail')
 let link = document.getElementById('previewLink')
+let list = document.getElementById('list')
 let myImage = new Image(100, 200)
 
 function getBook(ev) {
@@ -13,23 +14,37 @@ function getBook(ev) {
   fetch(`https://www.googleapis.com/books/v1/volumes?q=${search}:keyes&key=${apikey}`)
     .then(res => res.json()) // parse response as JSON (can be res.text() for plain response)
     .then(response => {
+      // console.log(response);
+      var ul = document.getElementById('catalog')
+
       response.items.forEach(book => {
-        let title = `${book.volumeInfo.title}`
-        let authors = `${book.volumeInfo.authors}`
-        let thumbnail = `${book.volumeInfo.imageLinks.thumbnail}`
-        let previewLink = `${book.volumeInfo.previewLink}`
+        console.log("books: ", book.volumeInfo);
+        let title = book.volumeInfo.title
+        let authors = book.volumeInfo.authors
+        if('imageLinks' in book.volumeInfo && 'thumbnail' in book.volumeInfo.imageLinks) {
+          let thumbnail = book.volumeInfo.imageLinks.thumbnail
+        } else {
+          thumbnail = ''
+        }
+        let previewLink = book.volumeInfo.previewLink
+        let thumbnail = book.volumeInfo.imageLinks.thumbnail
 
-        // console.log("books length: ", typeof book, book.volumeInfo, Object.keys(book.volumeInfo).length, thumbnail);
+        let li = document.createElement("li")
 
-        // for(let i = 0; i < 6 /*Object.keys(book.volumeInfo).length*/; i++){
+        let titleSpan = document.createElement("span")
+        titleSpan.innerHTML = "Title: " + title
 
-        console.log("pic: ", picture, thumbnail);
+        let authorSpan = document.createElement("span")
+        authorSpan.innerHTML = "Authors: " + authors
 
-          name.innerHTML = title
-          writer.innerHTML =  authors
-          myImage.src = thumbnail;
-          picture.appendChild(myImage);
-          link.setAttribute("href", previewLink + "") 
+        let image = document.createElement("img")
+        image.src = thumbnail
+
+
+        li.appendChild(titleSpan)
+        li.appendChild(authorSpan)
+        li.appendChild(image)
+        ul.appendChild(li)
 
 
 

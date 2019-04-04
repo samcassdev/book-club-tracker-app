@@ -17,3 +17,28 @@ h1 {
   width: 25%;
   text-align: center;
 }
+
+img {
+    height: 300px;
+    width: 221px;
+    display: block;
+    border: 2px solid black;
+    padding: 10px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.selected{
+   box-shadow:0px 12px 22px 1px #333;
+   background: content-box radial-gradient(crimson, skyblue);
+}
+
+li{
+  list-style: none;
+}
+
+span{
+  font-size: 24px;
+  display: block;
+  background-color: white;
+}
