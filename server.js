@@ -58,6 +58,14 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
+//Save to database
+app.post('/books', (req, res) => {
+  db.collection('books').save({name: req.body.name, pic: req.body.pic, msg: req.body.msg}, (err, result) => {
+    if (err) return console.log(err)
+    console.log('saved to database')
+    res.redirect('/')
+  })
+})
 
 // routes ======================================================================
 //require('./app/routes.js')(app, passport, db); // load our routes and pass in our app and fully configured passport
